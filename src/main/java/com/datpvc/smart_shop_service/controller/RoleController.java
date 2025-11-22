@@ -1,0 +1,42 @@
+package com.datpvc.smart_shop_service.controller;
+
+import com.datpvc.smart_shop_service.dto.request.RoleRequest;
+import com.datpvc.smart_shop_service.dto.response.ApiResponse;
+import com.datpvc.smart_shop_service.dto.response.RoleResponse;
+import com.datpvc.smart_shop_service.service.RoleService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/roles")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class RoleController {
+    RoleService roleService;
+
+    @PostMapping
+    ApiResponse<RoleResponse> create(@RequestBody RoleRequest request) {
+        return ApiResponse.<RoleResponse>builder()
+                .message("Role created")
+                .result(roleService.create(request))
+                .build();
+    }
+
+    @GetMapping
+    ApiResponse<List<RoleResponse>> getAll() {
+        return ApiResponse.<List<RoleResponse>>builder()
+                .message("All roles")
+                .result(roleService.getAll())
+                .build();
+    }
+
+    @DeleteMapping("/{roleId}")
+    ApiResponse<Void> delete(@PathVariable String roleId) {
+        roleService.delete(roleId);
+        return ApiResponse.<Void>builder().message("Successfully deleted role").build();
+    }
+}

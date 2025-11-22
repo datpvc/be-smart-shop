@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /smart-shop
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    driver-class-name: "oracle.jdbc.OracleDriver"
+    username: SYSTEM
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  signer: "e/CsXqXdiRtaEvb2zPwkhCEY4SMT8W3DY78nqmR/7Vl/3pOmK0YWSkOmMPi5dHNK"
+  valid-duration: 3600 # in second
+  refreshable-duration: 36000 # in second
