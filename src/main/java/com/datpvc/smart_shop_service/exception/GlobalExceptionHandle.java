@@ -4,7 +4,7 @@ import com.datpvc.smart_shop_service.dto.response.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,15 +37,15 @@ public class GlobalExceptionHandle {
                         .build());
     }
 
-//    @ExceptionHandler(value = AccessDeniedException.class)
-//    ResponseEntity<ApiResponse<?>> handleAccessDeniedException(AccessDeniedException exception) {
-//        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
-//        return ResponseEntity.status(errorCode.getStatusCode())
-//                .body(ApiResponse.builder()
-//                        .code(errorCode.getCode())
-//                        .message(errorCode.getMessage())
-//                        .build());
-//    }
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse<?>> handleAccessDeniedException(AccessDeniedException exception) {
+        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+        return ResponseEntity.status(errorCode.getStatusCode())
+                .body(ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build());
+    }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<ApiResponse<?>> handleValidation(MethodArgumentNotValidException exception) {
@@ -55,7 +55,6 @@ public class GlobalExceptionHandle {
 
         try {
             errorCode = ErrorCode.valueOf(enumKey);
-
             var constraintViolation =
                     exception.getBindingResult().getAllErrors().getFirst().unwrap(ConstraintViolation.class);
             attributes = constraintViolation.getConstraintDescriptor().getAttributes();
