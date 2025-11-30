@@ -1,8 +1,10 @@
 package com.datpvc.smart_shop_service.controller;
 
 import com.datpvc.smart_shop_service.dto.request.ProductRequest;
+import com.datpvc.smart_shop_service.dto.request.ProductSearchRequest;
 import com.datpvc.smart_shop_service.dto.response.ApiResponse;
 import com.datpvc.smart_shop_service.dto.response.ProductRepone;
+import com.datpvc.smart_shop_service.dto.response.ProductSearchResponse;
 import com.datpvc.smart_shop_service.service.ProductsService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -32,6 +34,14 @@ public class ProductsController {
         return ApiResponse.<List<ProductRepone>>builder()
                 .result(productsService.getAllProducts())
                 .message("All products successfully")
+                .build();
+    }
+
+    @PostMapping("/search")
+    ApiResponse<ProductSearchResponse> productSearch(@RequestBody @Valid ProductSearchRequest request) {
+        return ApiResponse.<ProductSearchResponse>builder()
+                .result(productsService.productSearch(request))
+                .message("Products search successfully")
                 .build();
     }
 

@@ -11,7 +11,8 @@ import lombok.experimental.FieldDefaults;
 public class ProductRequest {
     String name;
     String description;
-    String price;
     String image;
     String sku;
+    int price;
+    int stock;
 }

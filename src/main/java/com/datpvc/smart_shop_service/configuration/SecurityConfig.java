@@ -1,5 +1,6 @@
 package com.datpvc.smart_shop_service.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +22,9 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@Slf4j
 public class SecurityConfig {
-    public final String[] PUBLIC_ENDPOINTS = {"/products", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
+    public final String[] PUBLIC_ENDPOINTS = {"/products/search", "/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
 
     @Autowired
     private CustomJwtDecoder customJwtDecoder;

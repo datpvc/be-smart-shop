@@ -20,6 +20,7 @@ public class Products {
     String name;
     String description;
     String image;
-    String price;
     String sku;
+    int price;
+    int stock;
 }
