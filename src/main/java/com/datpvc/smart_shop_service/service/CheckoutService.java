@@ -28,7 +28,7 @@ public class CheckoutService {
                     .findById(request.getProductId()).orElseThrow(()-> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
 
             if (product.getStock() < request.getQuantity()) {
-                throw new RuntimeException("Not enough stock for product " + product.getName());
+                throw new AppException(ErrorCode.NOT_ENOUGH_STOCK);
             }
 
             product.setStock(product.getStock() - request.getQuantity());
