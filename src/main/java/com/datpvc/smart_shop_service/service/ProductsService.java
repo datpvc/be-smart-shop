@@ -63,20 +63,15 @@ public class ProductsService {
         if (page < 0) page = 0;
 
         Pageable pageable = PageRequest.of(page, request.getSize());
+        Page<Products> pageData = productsRepository.search(
+                request.getTextSearch(),
+                pageable
+        );
 
-        Specification<Products> spec = (root, query, cb) -> {
-            if (request.getTextSearch() == null || request.getTextSearch().isEmpty()) {
-                return cb.conjunction();
-            }
-            String like = "%" + request.getTextSearch().toLowerCase() + "%";
-            return cb.or(
-                    cb.like(cb.lower(root.get("name")), like),
-                    cb.like(cb.lower(root.get("description")), like)
-            );
-        };
-
-        Page<Products> pageData = productsRepository.findAll(spec, pageable);
-
-        return productsMapper.toSearchResponse(pageData, request.getPage(), request.getSize());
+        return productsMapper.toSearchResponse(
+                pageData,
+                request.getPage(),
+                request.getSize()
+        );
     }
 }
